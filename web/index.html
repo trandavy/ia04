@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simulation d'essaim de drones</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h1>Drones simulator</h1>
+      <p class="subtitle">Simulation multi-agent</p>
+
+      <form id="config-form" class="config-form">
+        <h2>Paramètres</h2>
+
+        <div class="budget-section" style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+          <h3 style="margin-top:0; font-size: 1rem;">Composition de la flotte</h3>
+          <div style="margin-bottom: 10px; font-weight: bold;">
+            Budget restant : <span id="budget-display">100000</span> €
+          </div>
+
+          <div class="drone-select" style="margin-bottom: 8px; border-bottom: 1px solid #444; padding-bottom: 8px;">
+            <strong>Éclaireur (6 000 €)</strong><br>
+            <small>Vitesse : 90km/h | Détection : 30m | Autonomie : 15s</small>
+            <input type="number" class="drone-input" data-type="scout" data-price="6000" name="count_scout" value="5" min="0" style="width: 100%; margin-top: 5px;" />
+          </div>
+
+          <div class="drone-select" style="margin-bottom: 8px; border-bottom: 1px solid #444; padding-bottom: 8px;">
+            <strong>Standard (10 000 €)</strong><br>
+            <small>Vitesse : 60km/h | Détection : 50m | Autonomie : 25s</small>
+            <input type="number" class="drone-input" data-type="standard" data-price="10000" name="count_standard" value="3" min="0" style="width: 100%; margin-top: 5px;" />
+          </div>
+
+          <div class="drone-select">
+            <strong>Lourd (20 000 €)</strong><br>
+            <small>Vitesse : 30km/h | Détection: 80m | Autonomie : 40s</small>
+            <input type="number" class="drone-input" data-type="heavy" data-price="20000" name="count_heavy" value="2" min="0" style="width: 100%; margin-top: 5px;" />
+          </div>
+          
+          <div style="margin-top: 10px; color: #aaa; font-size: 0.9em;">
+            Coût total : <span id="total-cost">0</span> €
+          </div>
+          <div id="budget-error" style="color: #ef4444; display: none; font-size: 0.9em; margin-top: 5px;">
+            Budget dépassé !
+          </div>
+        </div>
+
+        <label>
+          Survivants
+          <input type="number" name="numSurvivors" value="5" min="0" max="100" />
+        </label>
+
+        <label>
+          <input type="checkbox" id="toggle-heatmap" checked />
+          Afficher la heatmap d’exploration
+        </label>
+
+        <button type="submit" class="btn primary">Appliquer &amp; reset</button>
+      </form>
+
+      <div class="controls">
+        <button id="toggle-btn" class="btn secondary">⏸ Pause</button>
+        <p id="status-text" class="status">Temps : 0.0 s</p>
+      </div>
+
+      <div class="legend">
+        <h2>Légende</h2>
+        <ul>
+          <li><span class="dot drone-searching"></span> Drone en recherche</li>
+          <li><span class="dot drone-responding"></span> Drone appelé en renfort</li>
+          <li><span class="dot drone-hovering"></span> Drone en survol (survivant trouvé)</li>
+          <li><span class="dot drone-return"></span> Drone en retour à la charge</li>
+          <li><span class="dot charging-pt"></span> Point de charge</li>
+          <li><span class="dot trace"></span> Trace de vie</li>
+          <li><span class="dot survivor"></span> Survivant</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main">
+      <canvas id="sim-canvas" width="1000" height="700"></canvas>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
